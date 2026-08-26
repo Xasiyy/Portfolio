@@ -1,0 +1,9 @@
+{
+    "name": "portfolio",
+    "private": true,
+    "scripts": {
+        "dev:api": "pnpm --filter api dev",
+        "dev:web": "pnpm --filter web dev",
+        "dev:sandbox": "pnpm --filter sandbox-runner dev"
+    }
+}
