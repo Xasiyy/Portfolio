@@ -4,4 +4,8 @@ allowBuilds:
   '@nestjs/core': false
   '@prisma/client': false
   '@prisma/engines': false
+  cpu-features: set this to true or false
+  esbuild: set this to true or false
   prisma: false
+  protobufjs: set this to true or false
+  ssh2: set this to true or false
