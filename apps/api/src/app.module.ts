@@ -10,6 +10,7 @@ import { ContactModule } from './contact/contact.module';
             type: 'postgres',
             url: process.env.DATABASE_URL,
             autoLoadEntities: true,
+            migrations: [__dirname + '/migrations/*.js'],
             synchronize: process.env.NODE_ENV !== 'production',
         }),
         ProjectsModule,
