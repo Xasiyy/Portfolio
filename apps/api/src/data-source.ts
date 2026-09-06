@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config'
 import { DataSource } from 'typeorm';
 import { Project } from './projects/project.entity';
 import { Contact } from './contact/contact.entity';
