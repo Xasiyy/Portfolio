@@ -1,5 +1,6 @@
 //module racine 
 import { Module } from '@nestjs/common';
+import { HealthModule } from './health/health.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProjectsModule } from './projects/projects.module';
 import { ContactModule } from './contact/contact.module';
@@ -22,6 +23,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
                 synchronize: process.env.NODE_ENV !== 'production',
             })
         }),
+        HealthModule,
         ProjectsModule,
         ContactModule,
     ],

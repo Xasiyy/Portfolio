@@ -9,4 +9,6 @@ RUN pnpm install --filter sandbox-runner --frozen-lockfile
 COPY apps/sandbox-runner apps/sandbox-runner
 RUN pnpm --filter sandbox-runner build
 
+USER node
+EXPOSE 4000
 CMD ["node", "apps/sandbox-runner/dist/main.js"]
