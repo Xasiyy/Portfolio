@@ -2,9 +2,12 @@ import express from 'express';
 import { docker, cloneRepo, buildImage, runContainer, stopAndRemoveContainer } from './docker.js';
 import { randomUUID } from 'node:crypto';
 import { rm } from 'node:fs/promises';
+import { checkSandboxExists, createSandboxProxy } from './proxy.js';
 
 const router = express.Router();
 const sandbox = new Map<string, { containerId: string; port: string; contextPath: string; createAt: number }>();
+router.use('/sandboxes/:id/*', checkSandboxExists(sandbox), createSandboxProxy(sandbox));
+
 const pendingDletions = new Set<string>();
 const SANDBOX_TTL_MS = 30 * 60 * 1000;
 const CLEANUP_INTERVAL_MS = 5 * 60 * 1000;
@@ -41,9 +44,7 @@ async function deleteSandbox(id: string): Promise<void> {
     }
     finally {
         pendingDletions.delete(id);
-    }
-
-    
+    }    
 }
 
 //recoit une URL de repo, genere un identifiant unique puis enchaine clone - build run avec un 
