@@ -5,8 +5,46 @@ import { rm } from 'node:fs/promises';
 
 const router = express.Router();
 const sandbox = new Map<string, { containerId: string; port: string; contextPath: string; createAt: number }>();
+const pendingDletions = new Set<string>();
 const SANDBOX_TTL_MS = 30 * 60 * 1000;
 const CLEANUP_INTERVAL_MS = 5 * 60 * 1000;
+
+setInterval(() => {
+    const now = Date.now();
+    for (const [id, entry] of sandbox) {
+        if (now - entry.createAt > SANDBOX_TTL_MS) {
+            deleteSandbox(id).catch((err) => {
+                console.error(`Cleanup failed for sandbox ${id}:`, err);
+            });
+        }
+    }
+}, CLEANUP_INTERVAL_MS);
+
+async function deleteSandbox(id: string): Promise<void> {
+    if (pendingDletions.has(id))
+        return;
+
+    const entry = sandbox.get(id);
+    if (!entry)
+        return;
+    
+    pendingDletions.add(id);
+    try {
+        try {
+            await stopAndRemoveContainer(entry.containerId);
+        }
+        catch (err) {
+            console.error(`Failed to stop/remove container for sandbox ${id}:`, err);
+        }
+        await rm(entry.contextPath, { recursive: true, force:true });
+        sandbox.delete(id);
+    }
+    finally {
+        pendingDletions.delete(id);
+    }
+
+    
+}
 
 //recoit une URL de repo, genere un identifiant unique puis enchaine clone - build run avec un 
 // tag de l'id enregistre dans la map le resultat et reurn id et port au client
@@ -29,28 +67,6 @@ router.post('/sandboxes', async (req, res) => {
         res.status(500).json({ ok: false, error: (err as Error).message });
     }
 });
-
-setInterval(() => {
-    const now = Date.now();
-    for (const [id, entry] of sandbox) {
-        if (now - entry.createAt > SANDBOX_TTL_MS) {
-            deleteSandbox(id).catch((err) => {
-                console.error(`Cleanup failed for sandbox ${id}:`, err);
-            });
-        }
-    }
-}, CLEANUP_INTERVAL_MS);
-
-async function deleteSandbox(id: string): Promise<void> {
-    const entry = sandbox.get(id);
-    if (!entry)
-        return;
-
-    await stopAndRemoveContainer(entry.containerId);
-    await rm(entry.contextPath, { recursive: true, force:true });
-    sandbox.delete(id);
-
-}
 
 router.delete('/sandboxes/:id', async (req, res) => {
     try {
@@ -115,4 +131,4 @@ router.get('/dcker/ping', async (_req, res) => {
     }
 });
 
-export { router };
+export { router, sandbox, deleteSandbox };
