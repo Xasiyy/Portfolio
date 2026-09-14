@@ -6,6 +6,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { ContactModule } from './contact/contact.module';
 import { envValidationSchema } from './config/env.validation';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { SandboxModule } from './sandbox/sandbox.module';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         HealthModule,
         ProjectsModule,
         ContactModule,
+        SandboxModule,
     ],
     controllers: [],
     providers: [],

@@ -7,4 +7,5 @@ export const envValidationSchema = Joi.object({
 	PORT: Joi.number().default(3001),
 	DATABASE_URL: Joi.string() .uri().required(),
 	CORS_ORIGIN: Joi.string().required(),
+	SANDBOX_RUNNER_URL: Joi.string().uri().required(),
 });
