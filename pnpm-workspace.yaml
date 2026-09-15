@@ -9,3 +9,5 @@ allowBuilds:
   prisma: false
   protobufjs: true
   ssh2: true
+  sharp: false
+  unrs-resolver: false
