@@ -14,7 +14,7 @@ export function Home() {
         <p className="font-serif italic max-w-xl text-lg text-white/80 sm:text-xl">
             Vous avez une idée audacieuse à concrétiser ? Je mets mon expertise en développement au service des projets les plus innovants pour leur donner vie. Découvrez mon profil complet via le bouton juste en dessous.
         </p>
-        <RevealButton label="A propos de moi" />
+        <RevealButton href="/about" label="A propos de moi" />
       </main>
     </div>
   );

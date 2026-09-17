@@ -1,16 +1,17 @@
 "use client";
 
 import styled from "styled-components";
+import Link from "next/link";
 
-export function RevealButton({ label }: { label: string }) {
+export function RevealButton({ href, label }: { href: string; label: string }) {
   return (
-    <StyledButton type="button">
+    <StyledButton href={href}>
       <span className="label">{label}</span>
     </StyledButton>
   );
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled(Link)`
   margin-top: 3.5rem;
   position: relative;
   overflow: hidden;

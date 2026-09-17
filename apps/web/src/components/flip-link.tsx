@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import styled from "styled-components";
+import Link from "next/link";
 
 function renderLetters(label: string) {
   return label.split("").map((char, i) => (
@@ -35,7 +36,7 @@ export const Pill = styled.div`
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled(Link)`
   position: relative;
   display: inline-flex;
   align-items: center;
