@@ -139,6 +139,9 @@ importers:
       '@types/three':
         specifier: ^0.186.0
         version: 0.186.0
+      daisyui:
+        specifier: ^5.7.40
+        version: 5.7.40
       eslint:
         specifier: ^9
         version: 9.39.5(jiti@2.7.0)(supports-color@8.1.1)
@@ -1857,6 +1860,9 @@ packages:
 
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
+
+  daisyui@5.7.40:
+    resolution: {integrity: sha512-BKpx8Dat0CcQTW1iO4s6vAjQwffWaOI5wZ/+RidvM5MAyTF481l63Z14l67LXgRTFkA8YHmu+q146BiLlYtChA==}
 
   damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -5699,6 +5705,8 @@ snapshots:
       which: 2.0.2
 
   csstype@3.2.3: {}
+
+  daisyui@5.7.40: {}
 
   damerau-levenshtein@1.0.8: {}
 

@@ -4,7 +4,7 @@ import { ShaderBackground } from "@/components/shader-background";
 
 export function Home() {
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+    <div className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden">
       <ShaderBackground />
 
       <main className="relative z-10 flex flex-col items-center gap-6 px-6 text-center text-white sm:px-12">

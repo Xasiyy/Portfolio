@@ -29,6 +29,9 @@ export class Project {
     @Column({ default: 0 })
     order: number;
 
+    @Column({ type: 'varchar', length: 7, nullable: true })
+    completedAt: Date | null;
+
     @CreateDateColumn() //cree une colonne qui va enregistree date/heure au moment ou la ligne est cree
     createdAt: Date;
 

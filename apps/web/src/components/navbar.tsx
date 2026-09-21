@@ -7,7 +7,7 @@ export function Navbar() {
     <nav className="fixed inset-x-0 top-6 z-50 flex justify-center">
       <Pill>
         <FlipLink href="/about" label="About me" />
-        <FlipLink href="#" label="Projects" />
+        <FlipLink href="/projects" label="Projects" />
         <FlipLink href="#" label="Contact" />
       </Pill>
     </nav>

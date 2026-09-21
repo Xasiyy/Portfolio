@@ -38,6 +38,8 @@ services:
     build:
       context: ..
       dockerfile: apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:3001
     ports:
       - "8080:80"
     depends_on:
