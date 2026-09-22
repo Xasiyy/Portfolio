@@ -14,6 +14,11 @@ export function getSandboxUrl(sandboxId: string) {
     return `${SANDBOX_RUNNER_URL}/sandboxes/${sandboxId}/vnc.html?autoconnect=true&resize=scale&path=sandboxes/${sandboxId}/websockify`;
 }
 
+export function getTerminalSandboxUrl(sandboxId: string) {
+    //ttyd sert sa page directement a la racine de son container
+    return `${SANDBOX_RUNNER_URL}/sandboxes/${sandboxId}/`;
+}
+
 export async function getProjects() {
     const res = await fetch(`${API_URL}/projects`);
     if (!res.ok)

@@ -1,9 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createSandbox, getSandboxUrl } from "@/lib/api";
+import { use, useEffect, useState } from "react";
+import { createSandbox, getSandboxUrl, getTerminalSandboxUrl } from "@/lib/api";
+import { Sansation } from "next/font/google";
 
-export function SandboxModal({ projectId, onClose }: { projectId: string; onClose: () => void }) {
+type SandboxVariant = "graphical" | "terminal";
+
+export function SandboxModal({
+  projectId,
+  onClose,
+  variant = "graphical"
+}: {
+  projectId: string;
+  onClose: () => void;
+  variant?: SandboxVariant;
+}) {
   const [sandboxId, setSandboxId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,6 +33,10 @@ export function SandboxModal({ projectId, onClose }: { projectId: string; onClos
     return () => clearTimeout(timer);
   }, [sandboxId, attempt]);
 
+  const src = sandboxId ? variant === "terminal" ? getTerminalSandboxUrl(sandboxId): getSandboxUrl(sandboxId): undefined;
+
+  const aspectClass = variant === "terminal" ? "aspect-video" : "aspect-[4/3]";
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
@@ -34,20 +49,22 @@ export function SandboxModal({ projectId, onClose }: { projectId: string; onClos
         </button>
 
         {error && (
-          <p className="flex aspect-[4/3] items-center justify-center px-6 text-center text-white/70">{error}</p>
+          <p className={`flex ${aspectClass} items-center justify-center px-6 text-center text-white/70`}>{error}</p>
         )}
 
         {!error && (!sandboxId || !ready) && (
-          <p className="flex aspect-[4/3] items-center justify-center px-6 text-center text-white/70">
+          <p className={`flex ${aspectClass} items-center justify-center px-6 text-center text-white/70`}>
             {!sandboxId
               ? "Compilation et lancement en cours, ça peut prendre jusqu'à une minute…"
-              : "Démarrage de l'affichage…"}
+              : variant === "terminal"
+                ? "Démarrage du terminal…"
+                : "Démarrage de l'affichage…"}
           </p>
         )}
 
-        {sandboxId && ready && (
+        {sandboxId && ready && src && (
           <div className="relative">
-            <iframe key={attempt} src={getSandboxUrl(sandboxId)} className="aspect-[4/3] w-full" />
+            <iframe key={attempt} src={src} className={`${aspectClass} w-full`} />
             <button
               onClick={() => setAttempt((a) => a + 1)}
               className="absolute bottom-3 right-3 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-xs text-white/70 hover:bg-black/80"
