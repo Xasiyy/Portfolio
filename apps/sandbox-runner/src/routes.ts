@@ -6,7 +6,8 @@ import { checkSandboxExists, createSandboxProxy } from './proxy.js';
 
 const router = express.Router();
 const sandbox = new Map<string, { containerId: string; port: string; contextPath: string; createAt: number }>();
-router.use('/sandboxes/:id/*', checkSandboxExists(sandbox), createSandboxProxy(sandbox));
+const sandboxProxy = createSandboxProxy(sandbox);
+router.use('/sandboxes/:id', checkSandboxExists(sandbox), sandboxProxy);
 
 const pendingDletions = new Set<string>();
 const SANDBOX_TTL_MS = 30 * 60 * 1000;
@@ -132,4 +133,4 @@ router.get('/dcker/ping', async (_req, res) => {
     }
 });
 
-export { router, sandbox, deleteSandbox };
+export { router, sandbox, deleteSandbox, sandboxProxy };

@@ -27,7 +27,7 @@ export function ProjectTimeline({ projects }: { projects: any[] }) {
               }`}
             >
               <Link
-                href={`/projects/${project.id}`}
+                href={`/projects/${project.title.toLowerCase()}`}
                 className="flex flex-col items-center gap-1 rounded-2xl border border-white/10 bg-black/55 px-6 py-4 text-center shadow-lg backdrop-blur-md transition hover:bg-black/70"
               >
                 <span className="text-lg font-black">{project.title}</span>

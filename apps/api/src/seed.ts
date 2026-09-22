@@ -14,7 +14,7 @@ async function seed() {
             title: 'Cub3D',
             description: "Création d'un petit jeu 3D pour comprendre et apprendre à maîtriser la perspective et le raycasting avec des formules mathématiques complexes. Ce projet a été fait en duo.",
             techStack: ['C'],
-            repoUrl: '',
+            repoUrl: 'https://github.com/Xasiyy/Cub3D.git',
             completedAt: ('2025-12'),
         },
         {

@@ -4,6 +4,8 @@ WORKDIR /repo
 
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ARG NEXT_PUBLIC_SANDBOX_RUNNER_URL
+ENV NEXT_PUBLIC_SANDBOX_RUNNER_URL=$NEXT_PUBLIC_SANDBOX_RUNNER_URL
 
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY apps/web/package.json apps/web/package.json
