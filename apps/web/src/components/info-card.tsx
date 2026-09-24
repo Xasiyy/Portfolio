@@ -17,7 +17,6 @@ export function InfoCard({ title, children, className = "" }: InfoCardProps) {
         boxShadow: "14px 14px 34px #262626, -14px -14px 34px #404040",
       }}
     >
-      {/* Blob lumineux : mêmes couleurs que le halo du bouton "Tester" */}
       <div
         className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full opacity-40 blur-3xl"
         style={{
@@ -26,7 +25,6 @@ export function InfoCard({ title, children, className = "" }: InfoCardProps) {
         }}
       />
 
-      {/* Vitre translucide qui protège le contenu du flou du blob */}
       <div className="relative z-10 rounded-xl border border-white/10 bg-black/40 p-6 backdrop-blur-md">
         {title && (
           <h3 className="mb-4 font-serif text-xl text-white">{title}</h3>

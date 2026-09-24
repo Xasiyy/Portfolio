@@ -42,7 +42,7 @@ async function seed() {
         },
         {
             title: 'push_swap',
-            description: 'Algorithme de trie ',
+            description: "trier une pile d'entiers à l'aide d'une seconde pile et d'un jeu d'instructions restreint, en générant le moins d'opérations possible. Implémenté en C avec l'algorithme Turc, une approche qui choisit à chaque étape le déplacement le moins coûteux.",
             techStack: ['C'],
             completedAt: ('2024-11'),
         },
