@@ -12,7 +12,7 @@ export class SandboxService {
     async createSandbox(repoUrl: string): Promise<CreateSandboxResult> {
         const baseUrl = this.config.get<string>('SANDBOX_RUNNER_URL');
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 120_000);
+        const timeout = setTimeout(() => controller.abort(), 200_000);
 
         try {
             const response = await fetch(`${baseUrl}/sandboxes`, {

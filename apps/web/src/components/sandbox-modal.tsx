@@ -5,15 +5,18 @@ import { createSandbox, getSandboxUrl, getTerminalSandboxUrl } from "@/lib/api";
 import { Sansation } from "next/font/google";
 
 type SandboxVariant = "graphical" | "terminal";
+type SandboxSize = "default" | "large";
 
 export function SandboxModal({
   projectId,
   onClose,
-  variant = "graphical"
+  variant = "graphical",
+  size = "default",
 }: {
   projectId: string;
   onClose: () => void;
   variant?: SandboxVariant;
+  size?: SandboxSize;
 }) {
   const [sandboxId, setSandboxId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
@@ -36,10 +39,16 @@ export function SandboxModal({
   const src = sandboxId ? variant === "terminal" ? getTerminalSandboxUrl(sandboxId): getSandboxUrl(sandboxId): undefined;
 
   const aspectClass = variant === "terminal" ? "aspect-video" : "aspect-[4/3]";
+  const sizeClass = size === "large" ? "" : "w-full max-w-2xl";
+  const sizeStyle = size === "large" ? { width: "min(95vw, calc(90vh * 4 / 3))"} : undefined;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
+      <div
+      className={`relative ${sizeClass} overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl`}
+      style={sizeStyle}
+      >
+
         <button
           onClick={onClose}
           className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80"
