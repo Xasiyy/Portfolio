@@ -35,9 +35,9 @@ async function seed() {
         {
             title: 'Ftclock',
             description: "Site web interactif créé pour tous les étudiants de l'école 42. Ce projet a pour but d'aider les étudiants de l'école à calculer plus facilement les heures qu'ils ont à faire sur le campus, en fonction de leurs disponibilités, pour leur permettre d'avoir une meilleure organisation.",
-
-            techStack: ['Javascript', 'HTML', 'CSS'],
-            repoUrl: '',
+            techStack: ['Javascript', 'HTML', 'CSS', 'Express', 'firebase'],
+            repoUrl: 'https://github.com/Xasiyy/ft_Clock.git',
+            liveUrl: 'https://ftclock.dev',
             completedAt: ('2026-02'),
         },
         {
