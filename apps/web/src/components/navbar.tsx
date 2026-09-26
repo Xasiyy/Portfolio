@@ -11,7 +11,7 @@ export function Navbar() {
       <Pill>
         <FlipLink href="/about" label="About me" />
         <FlipLink href="/projects" label="Projects" />
-        <FlipLink href="#" label="Contact" />
+        <FlipLink href="/contact" label="Contact" />
       </Pill>
     </nav>
   );

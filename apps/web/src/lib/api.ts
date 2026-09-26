@@ -32,3 +32,15 @@ export async function getProject(id: string) {
         throw new Error("Project not found");
     return res.json();
 }
+
+export async function sendContact(data: Record<string, FormDataEntryValue>) {
+    const res = await fetch(`${API_URL}/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+    if (res.status === 429)
+        throw new Error("Trop de messages envoyés, réessayez dans une heure.");
+    if (!res.ok)
+        throw new Error("L'envoi a échoué, réessayez plus tard.");
+}

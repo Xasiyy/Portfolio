@@ -24,6 +24,9 @@ services:
       DATABASE_URL: postgres://postgres:postgres@db:5432/portfolio
       CORS_ORIGIN: http://localhost:8080
       SANDBOX_RUNNER_URL: http://host.docker.internal:4000
+      MAIL_USER: ${MAIL_USER}
+      MAIL_PASS: ${MAIL_PASS}
+      MAIL_TO: ${MAIL_TO}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:

@@ -8,4 +8,7 @@ export const envValidationSchema = Joi.object({
 	DATABASE_URL: Joi.string() .uri().required(),
 	CORS_ORIGIN: Joi.string().required(),
 	SANDBOX_RUNNER_URL: Joi.string().uri().required(),
+	MAIL_USER: Joi.string().email().required(),
+	MAIL_PASS: Joi.string().required(),
+	MAIL_TO: Joi.string().email().required(),
 });

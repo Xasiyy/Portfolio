@@ -7,6 +7,7 @@ import { ContactModule } from './contact/contact.module';
 import { envValidationSchema } from './config/env.validation';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SandboxModule } from './sandbox/sandbox.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { SandboxModule } from './sandbox/sandbox.module';
             isGlobal: true,
             validationSchema: envValidationSchema,
         }),
+        ThrottlerModule.forRoot([{ ttl: 60_000, limit: 10 }]),
         TypeOrmModule.forRootAsync({
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
@@ -21,7 +23,8 @@ import { SandboxModule } from './sandbox/sandbox.module';
                 url: process.env.DATABASE_URL,
                 autoLoadEntities: true,
                 migrations: [__dirname + '/migrations/*.js'],
-                synchronize: process.env.NODE_ENV !== 'production',
+                synchronize: false,
+                migrationsRun: true,
             })
         }),
         HealthModule,
