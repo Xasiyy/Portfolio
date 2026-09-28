@@ -52,7 +52,7 @@ services:
     build:
       context: ..
       dockerfile: apps/sandbox-runner/Dockerfile
-    network_node: host
+    network_mode: host
     environment:
       RUNNER_API_KEY: ${RUNNER_API_KEY}
       MAX_SANDBOXES: 4
