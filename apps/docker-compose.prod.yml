@@ -27,6 +27,7 @@ services:
       MAIL_USER: ${MAIL_USER}
       MAIL_PASS: ${MAIL_PASS}
       MAIL_TO: ${MAIL_TO}
+      RUNNER_API_KEY: ${RUNNER_API_KEY}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
@@ -45,6 +46,19 @@ services:
         NEXT_PUBLIC_SANDBOX_RUNNER_URL: https://sandbox.asiyaad.tech
     ports:
       - "127.0.0.1:8080:80"
+    restart: unless-stopped
+
+  sandbox-runner:
+    build:
+      context: ..
+      dockerfile: apps/sandbox-runner/Dockerfile
+    network_node: host
+    environment:
+      RUNNER_API_KEY: ${RUNNER_API_KEY}
+      MAX_SANDBOXES: 4
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    stop_grace_period: 30s
     restart: unless-stopped
 
 volumes:
