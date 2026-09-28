@@ -27,6 +27,7 @@ services:
       MAIL_USER: ${MAIL_USER}
       MAIL_PASS: ${MAIL_PASS}
       MAIL_TO: ${MAIL_TO}
+      RUNNER_API_KEY: ${RUNNER_API_KEY}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
@@ -54,6 +55,8 @@ services:
     build:
       context: ..
       dockerfile: apps/sandbox-runner/Dockerfile
+    environment:
+      RUNNER_API_KEY: ${RUNNER_API_KEY}
     network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

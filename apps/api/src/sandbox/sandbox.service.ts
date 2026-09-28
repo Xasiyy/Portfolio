@@ -17,16 +17,19 @@ export class SandboxService {
         try {
             const response = await fetch(`${baseUrl}/sandboxes`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-runner-key': this.config.get<string>('RUNNER_API_KEY')!,
+                },
                 body: JSON.stringify({ repoUrl }),
                 signal: controller.signal,
             });
 
             if (!response.ok) {
                 const body = await response.json().catch(() => ({}));
-                throw new HttpException(body.error ?? 'Sandbox runner error', HttpStatus.BAD_GATEWAY);
+                const status = response.status === 503 ? HttpStatus.SERVICE_UNAVAILABLE : HttpStatus.BAD_GATEWAY;
+                throw new HttpException(body.error ?? 'Sandbox runner error', status);
             }
-
             return (await response.json()) as CreateSandboxResult;
         }
         catch (err) {

@@ -38,7 +38,7 @@ export async function runContainer(tag: string): Promise<{ containerId: string; 
         Image: tag,
         ExposedPorts: { '3000/tcp': {} },  // declare quel port a l'interieur du conteneur est cense ecouter
         HostConfig: {
-            PortBindings: { '3000/tcp': [{ HostPort: '0' }] }, // mapping avec 0 qui attribut n'importe quel port libre
+            PortBindings: { '3000/tcp': [{ HostIp: '127.0.0.1', HostPort: '0' }] },
             Memory: 256 * 1024 * 1024, // 256 Mo, en octets
             NanoCpus: 1_000_000_000, // 1 CPU
         },
@@ -58,8 +58,7 @@ export async function runContainer(tag: string): Promise<{ containerId: string; 
 
 export async function stopAndRemoveContainer(containerId: string): Promise<void> {
     const container = docker.getContainer(containerId);
-    await container.stop();
-    await container.remove();
+    await container.remove({ force: true });
 }
 
 export async function removeImage(tag: string): Promise<void> {

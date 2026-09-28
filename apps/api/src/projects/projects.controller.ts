@@ -1,6 +1,7 @@
-import { Controller, Get, Param, ParseUUIDPipe, BadRequestException, Post } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe, BadRequestException, Post, UseGuards } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { SandboxService } from '../sandbox/sandbox.service';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 
 @Controller('projects')
 export class ProjectsController {
@@ -20,6 +21,8 @@ export class ProjectsController {
 	}
 
 	@Post(':id/sandbox')
+	@UseGuards(ThrottlerGuard)
+	@Throttle({ default: { limit: 3, ttl: 600_000 } })
 	async createSandbox(@Param('id', ParseUUIDPipe) id: string) {
 		const project = await this.projectsService.findOne(id);
 		
