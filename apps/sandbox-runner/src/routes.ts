@@ -1,5 +1,5 @@
 import express from 'express';
-import { docker, cloneRepo, buildImage, runContainer, stopAndRemoveContainer } from './docker.js';
+import { docker, cloneRepo, buildImage, runContainer, stopAndRemoveContainer, removeImage } from './docker.js';
 import { randomUUID } from 'node:crypto';
 import { rm } from 'node:fs/promises';
 import { checkSandboxExists, createSandboxProxy } from './proxy.js';
@@ -39,6 +39,12 @@ async function deleteSandbox(id: string): Promise<void> {
         }
         catch (err) {
             console.error(`Failed to stop/remove container for sandbox ${id}:`, err);
+        }
+        try {
+            await removeImage(`sandbox-${id}`);
+        }
+        catch (err) {
+            console.error(`Failed to renove image for sandbox ${id}:`, err);
         }
         await rm(entry.contextPath, { recursive: true, force:true });
         sandbox.delete(id);

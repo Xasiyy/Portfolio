@@ -9,7 +9,7 @@ export class ContactController {
 	constructor(private readonly contactService: ContactService) {}
 
 	@Post()
-	@Throttle({ default: { limit: 3, ttl: 3_600_000 } })
+	@Throttle({ default: { limit: 10, ttl: 3_600_000 } })
 	async create(@Body() dto: CreateContactDto) {
 		await this.contactService.create(dto);
 		return { ok: true };

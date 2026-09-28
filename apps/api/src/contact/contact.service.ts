@@ -33,14 +33,17 @@ export class ContactService {
         await this.contactRepository.save(this.contactRepository.create(data));
 
         try {
-            await this.transporter.sendMail({
-                from: `"Portfolio <${this.config.get<string>('MAIL_USER')}`,
+           await this.transporter.sendMail({
+                from: `"Portfolio" <${this.config.get<string>('MAIL_USER')}>`,
                 to: this.config.get<string>('MAIL_TO'),
                 replyTo: data.email,
-                subject: `[Portfolio] Neew message from ${data.firstName}`,
-                text: 
-                    `Message send via the portfolio contact form.\n\n` + `Fom : ${data.firstName} ${data.lastName} <${data.email}>\n\n` + `${data.message}`, 
+                subject: `[Portfolio] New message from ${data.firstName}`,
+                text:
+                    `Message sent via the portfolio contact form.\n\n` +
+                    `From: ${data.firstName} ${data.lastName} <${data.email}>\n\n` +
+                    `${data.message}`,
             });
+
         }
         catch (err) {
             this.logger.error('Failed to send contact email', err as Error);

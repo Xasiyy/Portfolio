@@ -1,6 +1,7 @@
 {
     "name": "portfolio",
     "private": true,
+    "packageManager": "pnpm@11..20.0",
     "scripts": {
         "dev:api": "pnpm --filter api dev",
         "dev:web": "pnpm --filter web dev",

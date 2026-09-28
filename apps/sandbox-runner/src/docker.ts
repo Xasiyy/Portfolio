@@ -61,3 +61,7 @@ export async function stopAndRemoveContainer(containerId: string): Promise<void>
     await container.stop();
     await container.remove();
 }
+
+export async function removeImage(tag: string): Promise<void> {
+    await docker.getImage(tag).remove({ force: true });
+}
