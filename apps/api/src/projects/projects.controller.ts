@@ -22,7 +22,7 @@ export class ProjectsController {
 
 	@Post(':id/sandbox')
 	@UseGuards(ThrottlerGuard)
-	@Throttle({ default: { limit: 3, ttl: 600_000 } })
+	@Throttle({ default: { limit: 15, ttl: 600_000 } })
 	async createSandbox(@Param('id', ParseUUIDPipe) id: string) {
 		const project = await this.projectsService.findOne(id);
 		

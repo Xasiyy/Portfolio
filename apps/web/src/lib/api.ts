@@ -6,7 +6,11 @@ const SANDBOX_RUNNER_URL = process.env.NEXT_PUBLIC_SANDBOX_RUNNER_URL;
 export async function createSandbox(id: string) {
     const res = await fetch(`${API_URL}/projects/${id}/sandbox`, { method: "POST" });
     if (!res.ok)
-        throw new Error("Impossible de lancer le sandbox");
+        throw new Error("sendFailed");
+    if (res.status === 429)
+        throw new Error("rateLimited");
+    if (res.status === 503)
+        throw new Error("full")
     return res.json() as Promise<{ sandboxId: string; port: string }>;
 }
 
@@ -39,8 +43,9 @@ export async function sendContact(data: Record<string, FormDataEntryValue>) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
     });
+    // on renvoie un code (clé de t.errors), le composant affiche le texte traduit
     if (res.status === 429)
-        throw new Error("Trop de messages envoyés, réessayez dans une heure.");
+        throw new Error("rateLimited");
     if (!res.ok)
-        throw new Error("L'envoi a échoué, réessayez plus tard.");
+        throw new Error("sendFailed");
 }

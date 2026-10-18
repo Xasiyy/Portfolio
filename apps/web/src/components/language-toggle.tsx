@@ -1,15 +1,17 @@
 "use client";
 
-import { FlipLink, Pill } from "@/components/flip-link";
+import { FlipButton, Pill } from "@/components/flip-link";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/i18n/language-provider";
 
 export function LanguageToggle() {
   const pathname = usePathname();
-  if (/^\/projects\/.+/.test(pathname)) return null;  
+  const { lang, toggleLang } = useLanguage();
+  if (/^\/projects\/.+/.test(pathname)) return null;
   return (
     <nav className="fixed left-6 top-6 z-50">
       <Pill>
-        <FlipLink href="#" label="FR/EN" />
+        <FlipButton onClick={toggleLang} label={lang === "fr" ? "EN" : "FR"} />
       </Pill>
     </nav>
   );

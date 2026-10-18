@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import StyledComponentsRegistry from "@/lib/registry";
 import { LanguageToggle } from "@/components/language-toggle";
+import { LanguageProvider } from "@/i18n/language-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,14 +31,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} ${dmSerifDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <StyledComponentsRegistry>
-          <Navbar />
-          <LanguageToggle />
-          {children}
+          <LanguageProvider>
+            <Navbar />
+            <LanguageToggle />
+            {children}
+          </LanguageProvider>
         </StyledComponentsRegistry>
 
       </body>

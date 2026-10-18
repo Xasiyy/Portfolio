@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Link from "next/link";
 
 function renderLetters(label: string) {
@@ -25,6 +25,19 @@ export function FlipLink({ href, label }: { href: string; label: string }) {
   );
 }
 
+export function FlipButton({ onClick, label }: { onClick: () => void; label: string }) {
+  return (
+    <StyledButton type="button" onClick={onClick} aria-label={label}>
+      <span className="layer layer-out" aria-hidden="true">
+        {renderLetters(label)}
+      </span>
+      <span className="layer layer-in" aria-hidden="true">
+        {renderLetters(label)}
+      </span>
+    </StyledButton>
+  );
+}
+
 export const Pill = styled.div`
   display: flex;
   align-items: center;
@@ -36,8 +49,8 @@ export const Pill = styled.div`
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
 `;
 
-const StyledLink = styled(Link)`
-  position: relative;
+const flipStyles = css`
+ position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -81,4 +94,14 @@ const StyledLink = styled(Link)`
   &:hover .layer-in span {
     transform: translateY(0);
   }
+`;
+
+const StyledLink = styled(Link)`
+  ${flipStyles}
+`
+
+const StyledButton = styled.button`
+  ${flipStyles}
+  background: none;
+  border: 0;
 `;

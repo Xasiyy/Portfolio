@@ -1,11 +1,13 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { createSandbox, getSandboxUrl, getTerminalSandboxUrl } from "@/lib/api";
 import { Sansation } from "next/font/google";
+import { useLanguage } from "@/i18n/language-provider";
 
 type SandboxVariant = "graphical" | "terminal";
 type SandboxSize = "default" | "large";
+type SandboxError = "launchFailed" | "rateLimited" | "full";
 
 export function SandboxModal({
   projectId,
@@ -18,15 +20,24 @@ export function SandboxModal({
   variant?: SandboxVariant;
   size?: SandboxSize;
 }) {
+  const { t } = useLanguage();
   const [sandboxId, setSandboxId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const [errorCode, setErrorCode] = useState<SandboxError | null>(null);
+
+  const started = useRef(false);
 
   useEffect(() => {
+    if (started.current)
+      return;
+    started.current = true;
     createSandbox(projectId)
       .then((data) => setSandboxId(data.sandboxId))
-      .catch(() => setError("Impossible de lancer le sandbox"));
+      .catch((err) => {
+        const code = (err as Error).message;
+        setErrorCode(code === "rateLimited" || code === "full" ? code: "launchFailed");
+      });
   }, [projectId]);
 
   useEffect(() => {
@@ -52,22 +63,22 @@ export function SandboxModal({
         <button
           onClick={onClose}
           className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80"
-          aria-label="Fermer"
+          aria-label={t.sandbox.close}
         >
           ✕
         </button>
 
-        {error && (
-          <p className={`flex ${aspectClass} items-center justify-center px-6 text-center text-white/70`}>{error}</p>
+        {errorCode && (
+          <p className={`flex ${aspectClass} items-center justify-center px-6 text-center text-white/70`}>{t.sandbox.launchFailed}</p>
         )}
 
-        {!error && (!sandboxId || !ready) && (
+        {!errorCode && (!sandboxId || !ready) && (
           <p className={`flex ${aspectClass} items-center justify-center px-6 text-center text-white/70`}>
             {!sandboxId
-              ? "Compilation et lancement en cours, ça peut prendre jusqu'à une minute…"
+              ? t.sandbox.compiling
               : variant === "terminal"
-                ? "Démarrage du terminal…"
-                : "Démarrage de l'affichage…"}
+                ? t.sandbox.startingTerminal
+                : t.sandbox.startingDisplay}
           </p>
         )}
 
@@ -78,7 +89,7 @@ export function SandboxModal({
               onClick={() => setAttempt((a) => a + 1)}
               className="absolute bottom-3 right-3 rounded-full border border-white/10 bg-black/60 px-3 py-1 text-xs text-white/70 hover:bg-black/80"
             >
-              Réessayer
+              {t.sandbox.retry}
             </button>
           </div>
         )}
@@ -86,4 +97,3 @@ export function SandboxModal({
     </div>
   );
 }
-
