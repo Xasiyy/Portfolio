@@ -1,3 +1,5 @@
+import { DesktopOnly } from "@/components/desktop-only";
+
 export const fr = {
   nav: { about: "À propos", projects: "Projets", contact: "Contact" },
   home: {
@@ -41,6 +43,7 @@ export const fr = {
     collaborators: "Collaborateurs",
     repository: "Dépôt du projet",
     viewOnGithub: "Voir le projet sur GitHub ↗",
+    desktopOnly: "La simulation est disponible uniquement sur ordinateur.",
   },
   sandbox: {
     rateLimited: "Vous avez lancé beaucoup de tests en peu de temps. Réessayez d'ici une dizaine de minutes.",

@@ -54,12 +54,18 @@ const flipStyles = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 1.1rem;
+  padding: 0.75rem 0.7rem;
   line-height: 1.4;
   font-family: var(--font-dm-serif);
   border-radius: 9999px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
+
+  @media (min-width: 640px) {
+    padding: 1rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
   color: white;
   white-space: nowrap;
   cursor: pointer;

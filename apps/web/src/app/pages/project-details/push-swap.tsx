@@ -7,6 +7,7 @@ import { PushSwapContentEn, PushSwapContentFr } from "./push-swap-content";
 import { getProjects } from "@/lib/api";
 import { SandboxModal } from "@/components/sandbox-modal";
 import { ShinyButton } from "@/components/shiny-button";
+import { DesktopOnly } from "@/components/desktop-only";
 
 export function PushSwapDetail() {
   const { lang, t } = useLanguage();
@@ -39,9 +40,12 @@ export function PushSwapDetail() {
 
         {project.repoUrl && (
         <div className="mt-16 mb-16 flex justify-center">
-            <ShinyButton onClick={() => setShowSandbox(true)} backgroundColor="#333333">
-            {t.projectPage.test}
-            </ShinyButton>
+            <DesktopOnly>
+              <ShinyButton onClick={() => setShowSandbox(true)} backgroundColor="#333333">
+                {t.projectPage.test}
+              </ShinyButton>
+            </DesktopOnly>
+
         </div>
         )}
 

@@ -7,6 +7,8 @@ import { SandboxModal } from "@/components/sandbox-modal";
 import { ShinyButton } from "@/components/shiny-button";
 import { useLanguage } from "@/i18n/language-provider";
 import { Cub3DContentEn, Cub3DContentFr } from "./cub3d-content";
+import { DesktopOnly } from "@/components/desktop-only";
+
 
 export function Cub3DDetail() {
   const { lang, t } = useLanguage();
@@ -41,9 +43,12 @@ export function Cub3DDetail() {
 
         {project.repoUrl && (
           <div className="mt-16 mb-16 flex justify-center">
-            <ShinyButton onClick={() => setShowSandbox(true)} backgroundColor="#333333">
-              {t.projectPage.test}
-            </ShinyButton>
+            <DesktopOnly>
+              <ShinyButton onClick={() => setShowSandbox(true)} backgroundColor="#333333">
+                {t.projectPage.test}
+              </ShinyButton>
+            </DesktopOnly>
+
           </div>
         )}
 

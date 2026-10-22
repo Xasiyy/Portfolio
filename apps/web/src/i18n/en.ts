@@ -42,6 +42,7 @@ export const en: Dictionary = {
     collaborators: "Collaborators",
     repository: "Project repository",
     viewOnGithub: "View the project on GitHub ↗",
+    desktopOnly: "The simulation is only available on a computer",
   },
   sandbox: {
     rateLimited: "You have launched a lot of tests in a short time. Please try again in about ten minutes.",

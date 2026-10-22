@@ -9,7 +9,7 @@ export function LanguageToggle() {
   const { lang, toggleLang } = useLanguage();
   if (/^\/projects\/.+/.test(pathname)) return null;
   return (
-    <nav className="fixed left-6 top-6 z-50">
+    <nav className="fixed left-6 top-6 z-50 hidden md:block">
       <Pill>
         <FlipButton onClick={toggleLang} label={lang === "fr" ? "EN" : "FR"} />
       </Pill>

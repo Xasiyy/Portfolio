@@ -3,8 +3,8 @@ import { Geist, Geist_Mono, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import StyledComponentsRegistry from "@/lib/registry";
-import { LanguageToggle } from "@/components/language-toggle";
 import { LanguageProvider } from "@/i18n/language-provider";
+import { LanguageToggle } from "@/components/language-toggle";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
